@@ -43,7 +43,7 @@
 
 ### FASE 1 — customers-service — Dominio
 
-- [ ] T002 Enums y entidades de dominio: `Genero`, `EstadoCliente`, `Persona`, `Cliente`
+- [X] T002 Enums y entidades de dominio: `Genero`, `EstadoCliente`, `Persona`, `Cliente`
 - [ ] T003 Jerarquía de excepciones de dominio de `customers-service`
 - [ ] T004 Eventos de dominio y puertos: `ClienteCreatedEvent`, `ClienteDesactivadoEvent`, `ClienteRepository`, `EventPublisher`
 
@@ -222,9 +222,9 @@ banking-microservices/
   - validación de cédula ecuatoriana (algoritmo módulo 10 de R-01) en método estático `validarIdentificacion(String)`
 
 **Criterio de completitud**:
-- `ClienteCreationTest` y `ClienteValidationTest` pasan 100% en verde.
-- Ningún import de Spring, JPA (excepto anotaciones de mapeo) ni RabbitMQ en los métodos de negocio.
-- Cobertura de líneas en `Cliente.java` ≥ 95% reportada por Jacoco.
+- `ClienteCreationTest` y `ClienteValidationTest` pasan 100% en verde. ✅ (10/10 tests, 0 failures)
+- Ningún import de Spring, JPA (excepto anotaciones de mapeo) ni RabbitMQ en los métodos de negocio. ✅
+- Cobertura de líneas en `Cliente.java` ≥ 95% reportada por Jacoco. ✅
 
 ---
 

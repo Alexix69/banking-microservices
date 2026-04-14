@@ -28,7 +28,7 @@ CREATE TABLE persona (
 CREATE TABLE cliente (
     id          BIGINT       PRIMARY KEY REFERENCES persona(id),
     contrasena  VARCHAR(255) NOT NULL,
-    estado      VARCHAR(10)  NOT NULL DEFAULT 'activo' CHECK (estado IN ('activo', 'inactivo'))
+    estado      VARCHAR(10)  NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'INACTIVO'))
 );
 ```
 
@@ -54,7 +54,7 @@ persona (1) ──── (0..1) cliente
 CREATE TABLE cliente_proyeccion (
     cliente_id  BIGINT       PRIMARY KEY,
     nombre      VARCHAR(100) NOT NULL,
-    estado      VARCHAR(10)  NOT NULL DEFAULT 'activo' CHECK (estado IN ('activo', 'inactivo'))
+    estado      VARCHAR(10)  NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'INACTIVO'))
 );
 ```
 
@@ -70,10 +70,10 @@ CREATE TABLE cliente_proyeccion (
 CREATE TABLE cuenta (
     id               BIGINT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     numero_cuenta    VARCHAR(20)     NOT NULL UNIQUE,
-    tipo             VARCHAR(10)     NOT NULL CHECK (tipo IN ('ahorro', 'corriente', 'digital')),
+    tipo             VARCHAR(10)     NOT NULL CHECK (tipo IN ('AHORRO', 'CORRIENTE', 'DIGITAL')),
     saldo_inicial    NUMERIC(15, 2)  NOT NULL CHECK (saldo_inicial >= 0),
     saldo_disponible NUMERIC(15, 2)  NOT NULL,
-    estado           VARCHAR(10)     NOT NULL DEFAULT 'activa' CHECK (estado IN ('activa', 'inactiva')),
+    estado           VARCHAR(10)     NOT NULL DEFAULT 'ACTIVA' CHECK (estado IN ('ACTIVA', 'INACTIVA')),
     cliente_id       BIGINT          NOT NULL REFERENCES cliente_proyeccion(cliente_id)
 );
 ```
@@ -91,7 +91,7 @@ CREATE TABLE cuenta (
 CREATE TABLE movimiento (
     id                   BIGINT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     fecha                TIMESTAMP       NOT NULL DEFAULT NOW(),
-    tipo                 VARCHAR(12)     NOT NULL CHECK (tipo IN ('deposito', 'retiro', 'ajuste', 'reversion')),
+    tipo                 VARCHAR(12)     NOT NULL CHECK (tipo IN ('DEPOSITO', 'RETIRO', 'AJUSTE', 'REVERSION')),
     valor                NUMERIC(15, 2)  NOT NULL CHECK (valor <> 0),
     saldo_resultante     NUMERIC(15, 2)  NOT NULL,
     cuenta_id            BIGINT          NOT NULL REFERENCES cuenta(id),
@@ -197,10 +197,10 @@ cliente_proyeccion (1) ──── (0..*) cuenta (1) ──── (0..*) movimi
 ```
 Genero                  EstadoCliente       EstadoCuenta        TipoCuenta          TipoMovimiento
 ─────────────────       ─────────────       ────────────        ──────────          ──────────────
-MASCULINO               activo              activa              ahorro              deposito
-FEMENINO                inactivo            inactiva            corriente           retiro
-                                                                digital             ajuste
-                                                                                    reversion
+MASCULINO               ACTIVO              ACTIVA              AHORRO              DEPOSITO
+FEMENINO                INACTIVO            INACTIVA            CORRIENTE           RETIRO
+                                                                DIGITAL             AJUSTE
+                                                                                    REVERSION
 ```
 
 ---
@@ -258,20 +258,20 @@ CREATE TABLE IF NOT EXISTS persona (
 CREATE TABLE IF NOT EXISTS cliente (
     id          BIGINT       PRIMARY KEY REFERENCES persona(id),
     contrasena  VARCHAR(255) NOT NULL,
-    estado      VARCHAR(10)  NOT NULL DEFAULT 'activo' CHECK (estado IN ('activo', 'inactivo'))
+    estado      VARCHAR(10)  NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'INACTIVO'))
 );
 
 INSERT INTO persona (nombre, genero, edad, identificacion, direccion, telefono)
 VALUES ('Jose Lema', 'MASCULINO', 30, '1713175071', 'Otavalo sn y principal', '+593991234567');
 
 INSERT INTO cliente (id, contrasena, estado)
-VALUES (currval('persona_id_seq'), '$2a$10$abcdefghijklmnopqrstuuVwxyzABCDEFGHIJ1234567890ABCDE', 'activo');
+VALUES (currval('persona_id_seq'), '$2a$10$abcdefghijklmnopqrstuuVwxyzABCDEFGHIJ1234567890ABCDE', 'ACTIVO');
 
 INSERT INTO persona (nombre, genero, edad, identificacion, direccion, telefono)
 VALUES ('Mariana Montalvo', 'FEMENINO', 25, '0650789428', 'Amazonas y NNUU', '+593997654321');
 
 INSERT INTO cliente (id, contrasena, estado)
-VALUES (currval('persona_id_seq'), '$2a$10$abcdefghijklmnopqrstuuVwxyzABCDEFGHIJ1234567890ABCDE', 'activo');
+VALUES (currval('persona_id_seq'), '$2a$10$abcdefghijklmnopqrstuuVwxyzABCDEFGHIJ1234567890ABCDE', 'ACTIVO');
 ```
 
 ### accounts-service/src/main/resources/BaseDatos.sql
@@ -280,23 +280,23 @@ VALUES (currval('persona_id_seq'), '$2a$10$abcdefghijklmnopqrstuuVwxyzABCDEFGHIJ
 CREATE TABLE IF NOT EXISTS cliente_proyeccion (
     cliente_id  BIGINT       PRIMARY KEY,
     nombre      VARCHAR(100) NOT NULL,
-    estado      VARCHAR(10)  NOT NULL DEFAULT 'activo' CHECK (estado IN ('activo', 'inactivo'))
+    estado      VARCHAR(10)  NOT NULL DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO', 'INACTIVO'))
 );
 
 CREATE TABLE IF NOT EXISTS cuenta (
     id               BIGINT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     numero_cuenta    VARCHAR(20)     NOT NULL UNIQUE,
-    tipo             VARCHAR(10)     NOT NULL CHECK (tipo IN ('ahorro', 'corriente', 'digital')),
+    tipo             VARCHAR(10)     NOT NULL CHECK (tipo IN ('AHORRO', 'CORRIENTE', 'DIGITAL')),
     saldo_inicial    NUMERIC(15, 2)  NOT NULL CHECK (saldo_inicial >= 0),
     saldo_disponible NUMERIC(15, 2)  NOT NULL,
-    estado           VARCHAR(10)     NOT NULL DEFAULT 'activa' CHECK (estado IN ('activa', 'inactiva')),
+    estado           VARCHAR(10)     NOT NULL DEFAULT 'ACTIVA' CHECK (estado IN ('ACTIVA', 'INACTIVA')),
     cliente_id       BIGINT          NOT NULL REFERENCES cliente_proyeccion(cliente_id)
 );
 
 CREATE TABLE IF NOT EXISTS movimiento (
     id                   BIGINT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     fecha                TIMESTAMP       NOT NULL DEFAULT NOW(),
-    tipo                 VARCHAR(12)     NOT NULL CHECK (tipo IN ('deposito', 'retiro', 'ajuste', 'reversion')),
+    tipo                 VARCHAR(12)     NOT NULL CHECK (tipo IN ('DEPOSITO', 'RETIRO', 'AJUSTE', 'REVERSION')),
     valor                NUMERIC(15, 2)  NOT NULL CHECK (valor <> 0),
     saldo_resultante     NUMERIC(15, 2)  NOT NULL,
     cuenta_id            BIGINT          NOT NULL REFERENCES cuenta(id),
@@ -304,13 +304,13 @@ CREATE TABLE IF NOT EXISTS movimiento (
 );
 
 INSERT INTO cliente_proyeccion (cliente_id, nombre, estado)
-VALUES (1, 'Jose Lema', 'activo'),
-       (2, 'Mariana Montalvo', 'activo');
+VALUES (1, 'Jose Lema', 'ACTIVO'),
+       (2, 'Mariana Montalvo', 'ACTIVO');
 
 INSERT INTO cuenta (numero_cuenta, tipo, saldo_inicial, saldo_disponible, estado, cliente_id)
-VALUES ('478758', 'ahorro', 2000.00, 2000.00, 'activa', 1),
-       ('225487', 'corriente', 100.00, 100.00, 'activa', 2),
-       ('495878', 'ahorro', 0.00, 0.00, 'activa', 2),
-       ('496825', 'ahorro', 540.00, 540.00, 'activa', 2),
-       ('585545', 'corriente', 1000.00, 1000.00, 'activa', 1);
+VALUES ('478758', 'AHORRO', 2000.00, 2000.00, 'ACTIVA', 1),
+       ('225487', 'CORRIENTE', 100.00, 100.00, 'ACTIVA', 2),
+       ('495878', 'AHORRO', 0.00, 0.00, 'ACTIVA', 2),
+       ('496825', 'AHORRO', 540.00, 540.00, 'ACTIVA', 2),
+       ('585545', 'CORRIENTE', 1000.00, 1000.00, 'ACTIVA', 1);
 ```

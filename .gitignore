@@ -1,0 +1,15 @@
+.gradle/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+.idea/
+*.iml
+*.ipr
+*.iws
+*.log
+.env
+.env.*
+!.env.example

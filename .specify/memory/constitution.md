@@ -1,10 +1,11 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: [TEMPLATE] → 1.0.0
-Bump type: MAJOR (initial establishment — all placeholder tokens replaced, full governance defined)
+Version change: 1.0.0 → 1.0.1
+Bump type: PATCH
 
-Modified principles: N/A (first ratification from template)
+Modified principles: sección 4 (regla de idioma de tests),
+                     sección 7 (ejemplos de nombres de test)
 
 Added sections:
   1. Propósito y alcance
@@ -148,6 +149,7 @@ Se aplica el esquema híbrido Opción B de forma estricta:
 - Clases de configuración: SecurityConfig, RabbitMQConfig, DataSourceConfig
 - Clases de utilidad y helpers
 - Nombres de tests y métodos de test
+- Nombres de métodos de test y clases de test
 - Variables internas de implementación fuera del dominio
 
 ### Regla de desempate
@@ -155,7 +157,13 @@ Se aplica el esquema híbrido Opción B de forma estricta:
 Si un nombre pertenece al lenguaje del negocio descrito en el enunciado
 del proyecto, va en español. Si pertenece a un patrón técnico o
 infraestructura, va en inglés.
-
+Los nombres de métodos de test siguen el patrón:
+subjectStateOrAction + Should + ExpectedOutcome
+Ejemplos:
+  clienteWithValidDataShouldCreateInstance()
+  clienteWithAgeLessThan18ShouldThrowException()
+  withdrawalWithInsufficientBalanceShouldReturnHttp422()
+  accountWithRecentActivityShouldNotBeDeleted()
 ---
 
 ## 5. Desarrollo guiado por pruebas (TDD)
@@ -267,8 +275,8 @@ debe ser reescrito hasta que el comentario sea innecesario.
   saldoDisponible en lugar de sd. numeroCuenta en lugar de nroCta.
 - Constantes: UPPER_SNAKE_CASE. LIMITE_RETIRO_DIARIO = 500.
 - Tests: el nombre describe el escenario completo en inglés.
-  clienteConEdadMenorA18LanzaExcepcion()
-  retiroConSaldoInsuficienteRetornaHttp422()
+  clienteWithAgeLessThan18ShouldThrowException()
+  withdrawalWithInsufficientBalanceShouldReturnHttp422()
 
 ### Tamaño de métodos y clases
 
@@ -438,4 +446,4 @@ Los datos persisten entre reinicios mediante named volumes.
 *Este documento es la fuente de verdad del proyecto. Toda spec, plan
 y tarea generada por cualquier agente debe ser consistente con él.*
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-14 | **Last Amended**: 2026-04-14
+**Version**: 1.0.1 | **Ratified**: 2026-04-14 | **Last Amended**: 2026-04-14

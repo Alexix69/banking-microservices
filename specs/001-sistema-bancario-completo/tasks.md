@@ -58,7 +58,7 @@
 ### FASE 3 — customers-service — Infraestructura
 
 - [X] T010 Persistencia JPA `customers-service`: `SpringDataClienteRepository`, `CustomerRepositoryJpa`, `BaseDatos.sql`
-- [ ] T011 Mensajería RabbitMQ `customers-service`: `RabbitMQConfig`, `RabbitMQEventPublisher`, `ClienteMapper`
+- [X] T011 Mensajería RabbitMQ `customers-service`: `RabbitMQConfig`, `RabbitMQEventPublisher`, `ClienteMapper`
 - [ ] T012 Controller REST + `GlobalExceptionHandler` de `customers-service`
 - [ ] T013 `Dockerfile` y `application.yml` productivo de `customers-service`
 

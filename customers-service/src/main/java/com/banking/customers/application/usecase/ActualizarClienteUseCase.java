@@ -7,7 +7,9 @@ import com.banking.customers.domain.exception.IdentificacionDuplicadaException;
 import com.banking.customers.domain.model.Cliente;
 import com.banking.customers.domain.model.Genero;
 import com.banking.customers.domain.port.ClienteRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ActualizarClienteUseCase {
 
     private final ClienteRepository clienteRepository;

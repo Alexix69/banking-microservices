@@ -8,7 +8,9 @@ import com.banking.customers.domain.model.Cliente;
 import com.banking.customers.domain.model.EstadoCliente;
 import com.banking.customers.domain.port.ClienteRepository;
 import com.banking.customers.domain.port.EventPublisher;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CrearClienteUseCase {
 
     private final ClienteRepository clienteRepository;

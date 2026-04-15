@@ -59,7 +59,7 @@
 
 - [X] T010 Persistencia JPA `customers-service`: `SpringDataClienteRepository`, `CustomerRepositoryJpa`, `BaseDatos.sql`
 - [X] T011 Mensajería RabbitMQ `customers-service`: `RabbitMQConfig`, `RabbitMQEventPublisher`, `ClienteMapper`
-- [ ] T012 Controller REST + `GlobalExceptionHandler` de `customers-service`
+- [X] T012 Controller REST + `GlobalExceptionHandler` de `customers-service`
 - [ ] T013 `Dockerfile` y `application.yml` productivo de `customers-service`
 
 ### FASE 4 — accounts-service — Dominio

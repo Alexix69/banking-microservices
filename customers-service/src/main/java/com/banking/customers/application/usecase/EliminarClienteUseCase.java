@@ -8,7 +8,9 @@ import com.banking.customers.domain.port.ClienteRepository;
 import com.banking.customers.domain.port.EventPublisher;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EliminarClienteUseCase {
 
     private final ClienteRepository clienteRepository;

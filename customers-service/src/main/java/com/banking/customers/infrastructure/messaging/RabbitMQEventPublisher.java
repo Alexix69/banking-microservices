@@ -6,7 +6,9 @@ import com.banking.customers.domain.event.DomainEvent;
 import com.banking.customers.domain.port.EventPublisher;
 import com.banking.customers.infrastructure.config.RabbitMQConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RabbitMQEventPublisher implements EventPublisher {
 
     private static final String ROUTING_CREATED = "cliente.created";

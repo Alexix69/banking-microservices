@@ -1,8 +1,10 @@
 [versions]
 spring-boot = "3.2.5"
 spring-dependency-management = "1.1.4"
-testcontainers = "1.19.7"
+testcontainers = "1.20.4"
 kotlin = "1.9.23"
+mapstruct = "1.5.5.Final"
+mapstruct-processor = "1.5.5.Final"
 
 [libraries]
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -15,6 +17,8 @@ testcontainers-core = { module = "org.testcontainers:testcontainers", version.re
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct-processor" }
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

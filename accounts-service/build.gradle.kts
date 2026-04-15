@@ -19,12 +19,15 @@ dependencies {
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.spring.boot.starter.amqp)
     implementation(libs.spring.boot.starter.validation)
+    implementation(libs.mapstruct)
+    annotationProcessor(libs.mapstruct.processor)
     runtimeOnly(libs.postgresql)
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.testcontainers.core)
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.testcontainers.postgresql)
     testImplementation(libs.testcontainers.rabbitmq)
+    testAnnotationProcessor(libs.mapstruct.processor)
 }
 
 tasks.test {

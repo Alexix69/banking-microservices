@@ -5,7 +5,9 @@ import com.banking.customers.domain.port.ClienteRepository;
 import com.banking.customers.infrastructure.mapper.CustomerMapper;
 
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CustomerRepositoryJpa implements ClienteRepository {
 
     private final SpringDataClienteRepository springDataRepo;

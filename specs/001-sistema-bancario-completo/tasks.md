@@ -53,7 +53,7 @@
 - [X] T006 `CrearClienteUseCase` (HU-01)
 - [X] T007 `ConsultarClienteUseCase` (HU-02)
 - [X] T008 `ActualizarClienteUseCase` (HU-03)
-- [ ] T009 `EliminarClienteUseCase` (HU-04) — sin validar cuentas activas (Decisión B)
+- [X] T009 `EliminarClienteUseCase` (HU-04) — sin validar cuentas activas (Decisión B)
 
 ### FASE 3 — customers-service — Infraestructura
 
@@ -429,8 +429,8 @@ banking-microservices/
 > ⚠️ **Impacto en spec.md (RN-04 y HU-04 escenario 3)**: conforme Decisión B, el escenario 3 de HU-04 ya no aplica. El test `eliminarClienteConCuentasActivasDebeDesactivarIgualmenteSinLanzarExcepcion` documenta explícitamente esta decisión arquitectónica.
 
 **Criterio de completitud**:
-- `EliminarClienteUseCaseTest` pasa 100% en verde sin contexto Spring.
-- El test de "cliente con cuentas activas se desactiva sin excepción" pasa en verde.
+- `EliminarClienteUseCaseTest` pasa 100% en verde sin contexto Spring. ✅ (52 tests, 0 failures)
+- El test de "cliente con cuentas activas se desactiva sin excepción" pasa en verde. ✅
 
 ---
 

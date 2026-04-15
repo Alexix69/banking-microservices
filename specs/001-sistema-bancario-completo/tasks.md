@@ -64,10 +64,10 @@
 
 ### FASE 4 — accounts-service — Dominio
 
-- [ ] T014 Enums y entidades de dominio: `EstadoCuenta`, `TipoCuenta`, `TipoMovimiento`, `ClienteProyeccion`, `Cuenta`
-- [ ] T015 Entidad `Movimiento` con campo `justificacion` (Decisión A) + jerarquía de excepciones de `accounts-service`
-- [ ] T016 Chain of Validators de movimiento: `MovimientoValidator`, validadores concretos
-- [ ] T017 Puertos de dominio `accounts-service`: `CuentaRepository`, `MovimientoRepository`, `ClienteProyeccionRepository`
+- [X] T014 Enums y entidades de dominio: `EstadoCuenta`, `TipoCuenta`, `TipoMovimiento`, `ClienteProyeccion`, `Cuenta`
+- [X] T015 Entidad `Movimiento` con campo `justificacion` (Decisión A) + jerarquía de excepciones de `accounts-service`
+- [X] T016 Chain of Validators de movimiento: `MovimientoValidator`, validadores concretos
+- [X] T017 Puertos de dominio `accounts-service`: `CuentaRepository`, `MovimientoRepository`, `ClienteProyeccionRepository`
 
 ### FASE 5 — accounts-service — Aplicación
 

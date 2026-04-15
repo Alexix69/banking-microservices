@@ -54,7 +54,7 @@ cliente.created
 {
   "clienteId": 1,
   "nombre": "Jose Lema",
-  "estado": "activo"
+  "estado": "ACTIVO"
 }
 ```
 
@@ -62,7 +62,7 @@ cliente.created
 |---|---|---|
 | `clienteId` | Number (Long) | ID interno del cliente en customers-service |
 | `nombre` | String | Nombre completo del cliente |
-| `estado` | String | Siempre `"activo"` en este evento |
+| `estado` | String | Reservado. Siempre serializa como `"ACTIVO"`. El consumer ignora este campo y establece el estado como `ACTIVO` por defecto al crear la proyección local. |
 
 ### AMQP Message Properties
 
@@ -82,6 +82,8 @@ ON CONFLICT (cliente_id) DO UPDATE
     SET nombre = EXCLUDED.nombre,
         estado = EXCLUDED.estado;
 ```
+
+> **Nota**: el campo `estado` del payload no se usa en el upsert. La proyección siempre se crea o actualiza como `ACTIVO` al recibir este evento. `ClienteDesactivadoEvent` es el único que modifica el estado a `INACTIVO`.
 
 ---
 

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.jpa)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
+    jacoco
 }
 
 java {
@@ -35,4 +36,17 @@ tasks.test {
     environment("API_VERSION", "1.44")
     environment("DOCKER_API_VERSION", "1.44")
     jvmArgs("-Dapi.version=1.44")
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }

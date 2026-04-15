@@ -25,6 +25,13 @@ class CuentaCreationTest {
     }
 
     @Test
+    void tieneMovimientosRecientesShouldReturnFalseByDefault() {
+        Cuenta cuenta = Cuenta.create("ACC-100", TipoCuenta.AHORRO, BigDecimal.ZERO,
+                EstadoCuenta.ACTIVA, clienteActivo());
+        assertFalse(cuenta.tieneMovimientosRecientes());
+    }
+
+    @Test
     void cuentaAhorroWithZeroBalanceShouldBeValid() {
         Cuenta cuenta = Cuenta.create("ACC-001", TipoCuenta.AHORRO, BigDecimal.ZERO,
                 EstadoCuenta.ACTIVA, clienteActivo());

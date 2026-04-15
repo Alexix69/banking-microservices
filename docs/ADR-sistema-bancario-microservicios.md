@@ -228,6 +228,20 @@ public class ClienteService {
 
 El evento se publica **después de la persistencia exitosa**. Si la base de datos falla, el evento no se emite y no hay inconsistencia.
 
+### Decisión D — Desactivación de cuentas por evento (adición posterior al diseño inicial)
+
+**Decisión**: La desactivación de un cliente via `DELETE /clientes/{id}` ocurre sin verificar si el cliente tiene cuentas activas. `customers-service` no es responsable de validar el estado de las cuentas.
+
+**Flujo de Choreography**: `ClienteDesactivadoEvent` es consumido por `accounts-service`, que desactiva todas las cuentas activas del cliente sin aplicar las reglas de HU-08 (no se verifica antigüedad de movimientos ni saldo).
+
+**Consistencia eventual**: Existe una ventana de tiempo entre la desactivación del cliente y la desactivación de sus cuentas, aceptada como decisión de negocio documentada.
+
+**Eliminación de ClienteConCuentasActivasException**: Esta excepción fue eliminada de `customers-service` por diseño arquitectónico. RN-04 queda descartada en ese contexto.
+
+**Flujos independientes**: `EliminarCuentaUseCase` (HU-08) y el procesamiento de `ClienteDesactivadoEvent` son flujos independientes que no comparten lógica de validación (Decisión C).
+
+**Garantía ejecutable**: `deactivationShouldNeverCheckForActiveCuentas()` en `EliminarClienteUseCaseTest` verifica con `verifyNoMoreInteractions(clienteRepository)` que no existe verificación de cuentas en el use case.
+
 ---
 
 ## 7. ADR-005 — Estrategia de persistencia: base de datos por servicio

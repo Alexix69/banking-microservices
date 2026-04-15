@@ -65,7 +65,8 @@ Permite registrar, consultar, actualizar y desactivar clientes bancarios. Es la 
 
 2. **Dado** que realizo `DELETE /clientes/{id}` con un ID que no existe, **Cuando** el sistema intenta localizar el recurso, **Entonces** devuelve HTTP 404.
 
-3. **Dado** que realizo `DELETE /clientes/{id}` sobre un cliente que tiene al menos una cuenta activa, **Cuando** el sistema valida la precondición, **Entonces** devuelve HTTP 409 con el mensaje **"El cliente posee cuentas activas que deben ser desactivadas primero"**.
+3. ~~CA-04.3 — anulado por Decisión D~~
+   Este escenario fue eliminado por decisión arquitectónica. `DELETE /clientes/{id}` desactiva al cliente incondicionalmente si existe. La desactivación de cuentas asociadas ocurre de forma asincrónica mediante `ClienteDesactivadoEvent`. Ver ADR-004 Decisión D.
 
 ---
 
@@ -303,7 +304,7 @@ Establece los estándares de calidad de código (TDD, cobertura mínima) y el me
 | RN-01 | Retiro que supera el saldo disponible | 422 | "Saldo no disponible" |
 | RN-02 | Retiros acumulados del día superan $500 | 422 | "Límite de retiro diario excedido" |
 | RN-03 | Movimiento con valor igual a cero | 400 | "El valor del movimiento no puede ser cero" |
-| RN-04 | Eliminar cliente con cuentas activas | 409 | "El cliente posee cuentas activas que deben ser desactivadas primero" |
+| RN-04 | ~~Eliminado por Decisión D~~ | Ver ADR-004 | Comportamiento reemplazado por desactivación asincrónica vía evento | — |
 | RN-05 | Eliminar cuenta con actividad en el último año | 409 | Mensaje descriptivo de actividad reciente |
 | RN-06 | Crear cuenta para cliente inexistente o inactivo | 422 | Mensaje descriptivo |
 | RN-07 | Edad del cliente menor a 18 | 400 | Mensaje descriptivo |
@@ -384,7 +385,7 @@ Establece los estándares de calidad de código (TDD, cobertura mínima) y el me
 - **SC-004**: Todos los controladores quedan cubiertos por al menos una prueba de integración con contenedores reales.
 - **SC-005**: El sistema completo levanta correctamente desde un repositorio limpio con el único comando `docker compose up`, sin ninguna dependencia previa instalada en el host más allá de Docker.
 - **SC-006**: Todos los endpoints de la API responden de acuerdo a los contratos definidos (rutas, verbos, códigos HTTP, formato de error) verificables con Postman.
-- **SC-007**: Los mensajes de error exactos para RN-01, RN-02, RN-03 y RN-04 se retornan con el texto literal especificado, sin variaciones.
+- **SC-007**: Los mensajes de error exactos para RN-01, RN-02 y RN-03 se retornan con el texto literal especificado, sin variaciones. RN-04 fue eliminado por Decisión D (ver ADR-004).
 - **SC-008**: La latencia de respuesta de cualquier endpoint es aceptable bajo carga normal de prueba funcional (operación completada sin timeouts en el entorno local).
 - **SC-009**: Ningún archivo de código fuente (Java, YAML, properties, Dockerfile, scripts) contiene comentarios de ningún tipo.
 - **SC-010**: La comunicación entre microservicios ocurre exclusivamente mediante RabbitMQ; no existen llamadas REST directas entre los dos microservicios.

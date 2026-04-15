@@ -60,7 +60,7 @@
 - [X] T010 Persistencia JPA `customers-service`: `SpringDataClienteRepository`, `CustomerRepositoryJpa`, `BaseDatos.sql`
 - [X] T011 Mensajería RabbitMQ `customers-service`: `RabbitMQConfig`, `RabbitMQEventPublisher`, `ClienteMapper`
 - [X] T012 Controller REST + `GlobalExceptionHandler` de `customers-service`
-- [ ] T013 `Dockerfile` y `application.yml` productivo de `customers-service`
+- [X] T013 `Dockerfile` y `application.yml` productivo de `customers-service`
 
 ### FASE 4 — accounts-service — Dominio
 
@@ -86,10 +86,10 @@
 
 ### FASE 7 — Integración completa y validación final
 
-- [ ] T027 Prueba de integración end-to-end: flujo completo customers → accounts vía eventos (HU-14)
-- [ ] T028 `docker-compose.yml` final con health checks, named volumes y orden de arranque (HU-17)
-- [ ] T029 Actualizar `ADR-004` (Decisión D): consistencia eventual, eliminación de `ClienteConCuentasActivasException`, regla de HU-08 no aplicable en Flujo 2
-- [ ] T030 Validación final: cobertura 100% dominio, 80% casos de uso, smoke test completo (HU-15, HU-16)
+- [X] T027 Prueba de integración end-to-end: flujo completo customers → accounts vía eventos (HU-14)
+- [X] T028 `docker-compose.yml` final con health checks, named volumes y orden de arranque (HU-17)
+- [X] T029 Actualizar `ADR-004` (Decisión D): consistencia eventual, eliminación de `ClienteConCuentasActivasException`, regla de HU-08 no aplicable en Flujo 2
+- [X] T030 Validación final: cobertura 100% dominio, 80% casos de uso, smoke test completo (HU-15, HU-16)
 
 ---
 

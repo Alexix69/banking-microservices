@@ -3,8 +3,6 @@ package com.banking.accounts.integration;
 import com.banking.accounts.domain.model.EstadoCliente;
 import com.banking.accounts.domain.model.EstadoCuenta;
 import com.banking.accounts.domain.model.TipoCuenta;
-import com.banking.accounts.domain.port.ClienteProyeccionRepository;
-import com.banking.accounts.domain.port.CuentaRepository;
 import com.banking.accounts.infrastructure.config.RabbitMQConfig;
 import com.banking.accounts.infrastructure.persistence.ClienteProyeccionJpaEntity;
 import com.banking.accounts.infrastructure.persistence.CuentaJpaEntity;
@@ -19,6 +17,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -63,6 +64,9 @@ class ClienteEventConsumerIntegrationTest {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    TestRestTemplate testRestTemplate;
 
     @Autowired
     SpringDataClienteProyeccionRepository clienteProyeccionRepo;
@@ -192,6 +196,90 @@ class ClienteEventConsumerIntegrationTest {
             assertThat(cuentas).hasSize(1);
             assertThat(cuentas.get(0).getEstado()).isEqualTo(EstadoCuenta.INACTIVA);
         });
+    }
+
+    @Test
+    void fullFlowCreateClientePublishEventAndCreateCuenta() {
+        Long clienteId = 50L;
+        Map<String, Object> event = Map.of(
+                "clienteId", clienteId,
+                "nombre", "Ana Gomez",
+                "estado", "ACTIVO"
+        );
+
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.EXCHANGE_CLIENTE,
+                RabbitMQConfig.ROUTING_CREATED,
+                event
+        );
+
+        await().atMost(5, TimeUnit.SECONDS).until(() ->
+                clienteProyeccionRepo.findByClienteId(clienteId).isPresent()
+        );
+
+        Map<String, Object> cuentaRequest = Map.of(
+                "numeroCuenta", "CTA-E2E-001",
+                "tipo", "AHORRO",
+                "saldoInicial", 750.00,
+                "estado", "ACTIVA",
+                "clienteId", clienteId
+        );
+
+        ResponseEntity<Map> response = testRestTemplate.postForEntity("/cuentas", cuentaRequest, Map.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Number saldoDisponible = (Number) response.getBody().get("saldoDisponible");
+        Number saldoInicial = (Number) response.getBody().get("saldoInicial");
+        assertThat(saldoDisponible.doubleValue()).isEqualTo(saldoInicial.doubleValue());
+    }
+
+    @Test
+    void flujoCompletoDesactivarClientePublicarEventoYVerificarCuentasInactivas() {
+        Long clienteId = 60L;
+        ClienteProyeccionJpaEntity proyeccion = buildProyeccion(clienteId, "Pedro Torres", EstadoCliente.ACTIVO);
+        clienteProyeccionRepo.save(proyeccion);
+
+        CuentaJpaEntity cuenta1 = buildCuenta("CTA-E2E-002", clienteId, EstadoCuenta.ACTIVA);
+        CuentaJpaEntity cuenta2 = buildCuenta("CTA-E2E-003", clienteId, EstadoCuenta.ACTIVA);
+        CuentaJpaEntity savedCuenta1 = cuentaRepo.save(cuenta1);
+        cuentaRepo.save(cuenta2);
+
+        MovimientoJpaEntity mov = new MovimientoJpaEntity();
+        mov.setFecha(LocalDateTime.now().minusDays(10));
+        mov.setTipoMovimiento(TipoMovimiento.DEPOSITO);
+        mov.setValor(new BigDecimal("200.00"));
+        mov.setSaldoResultante(new BigDecimal("1200.00"));
+        mov.setCuentaId(savedCuenta1.getId());
+        movimientoRepo.save(mov);
+
+        Map<String, Object> event = Map.of("clienteId", clienteId);
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.EXCHANGE_CLIENTE,
+                RabbitMQConfig.ROUTING_DESACTIVADO,
+                event
+        );
+
+        await().atMost(5, TimeUnit.SECONDS).untilAsserted(() -> {
+            var updated = clienteProyeccionRepo.findByClienteId(clienteId);
+            assertThat(updated).isPresent();
+            assertThat(updated.get().getEstado()).isEqualTo(EstadoCliente.INACTIVO);
+        });
+
+        await().atMost(5, TimeUnit.SECONDS).untilAsserted(() -> {
+            var cuentas = cuentaRepo.findByClienteId(clienteId);
+            assertThat(cuentas).hasSize(2);
+            assertThat(cuentas).allMatch(c -> c.getEstado() == EstadoCuenta.INACTIVA);
+        });
+
+        Map<String, Object> nuevaCuentaRequest = Map.of(
+                "numeroCuenta", "CTA-E2E-004",
+                "tipo", "AHORRO",
+                "saldoInicial", 500.00,
+                "estado", "ACTIVA",
+                "clienteId", clienteId
+        );
+        ResponseEntity<Map> createResponse = testRestTemplate.postForEntity("/cuentas", nuevaCuentaRequest, Map.class);
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     private ClienteProyeccionJpaEntity buildProyeccion(Long clienteId, String nombre, EstadoCliente estado) {

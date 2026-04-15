@@ -15,9 +15,6 @@ public class Cliente extends Persona {
     private EstadoCliente estado;
     private List<DomainEvent> domainEvents = new ArrayList<>();
 
-    private Cliente() {
-    }
-
     private Cliente(Long id, String nombre, Genero genero, int edad,
                     String identificacion, String direccion, String telefono,
                     String contrasena, EstadoCliente estado) {

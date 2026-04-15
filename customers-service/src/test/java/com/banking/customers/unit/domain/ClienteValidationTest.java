@@ -17,6 +17,24 @@ class ClienteValidationTest {
     private static final String TELEFONO = "+593991234567";
 
     @Test
+    void identificacionNullShouldThrowException() {
+        assertThrows(IdentificacionInvalidaException.class, () ->
+                Cliente.create(NOMBRE, Genero.FEMENINO, 25,
+                        null, DIRECCION, TELEFONO,
+                        CONTRASENA_VALIDA, EstadoCliente.ACTIVO)
+        );
+    }
+
+    @Test
+    void identificacionWithThirdDigitGreaterThan5ShouldThrowException() {
+        assertThrows(IdentificacionInvalidaException.class, () ->
+                Cliente.create(NOMBRE, Genero.FEMENINO, 25,
+                        "1767180736", DIRECCION, TELEFONO,
+                        CONTRASENA_VALIDA, EstadoCliente.ACTIVO)
+        );
+    }
+
+    @Test
     void identificacionWithWrongVerifierDigitShouldThrowException() {
         assertThrows(IdentificacionInvalidaException.class, () ->
                 Cliente.create(NOMBRE, Genero.FEMENINO, 25,

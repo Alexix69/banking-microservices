@@ -1,0 +1,178 @@
+{
+  "info": {
+    "name": "Banking Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrlCustomers",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "baseUrlAccounts",
+      "value": "http://localhost:8081",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "customers-service",
+      "item": [
+        {
+          "name": "POST /clientes",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlCustomers}}/clientes", "host": ["{{baseUrlCustomers}}"], "path": ["clientes"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Jose Lema\",\n  \"genero\": \"MASCULINO\",\n  \"edad\": 30,\n  \"identificacion\": \"1713175071\",\n  \"direccion\": \"Otavalo sn y principal\",\n  \"telefono\": \"+593991234567\",\n  \"contrasena\": \"1234.Abc\",\n  \"estado\": \"ACTIVO\"\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"]}}]
+        },
+        {
+          "name": "GET /clientes/{id}",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrlCustomers}}/clientes/1", "host": ["{{baseUrlCustomers}}"], "path": ["clientes", "1"]}
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "PUT /clientes/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlCustomers}}/clientes/1", "host": ["{{baseUrlCustomers}}"], "path": ["clientes", "1"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Jose Lema Suarez\",\n  \"direccion\": \"Nueva direccion 456\",\n  \"telefono\": \"+593999999999\"\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "DELETE /clientes/{id}",
+          "request": {
+            "method": "DELETE",
+            "url": {"raw": "{{baseUrlCustomers}}/clientes/1", "host": ["{{baseUrlCustomers}}"], "path": ["clientes", "1"]}
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        }
+      ]
+    },
+    {
+      "name": "accounts-service",
+      "item": [
+        {
+          "name": "POST /cuentas",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlAccounts}}/cuentas", "host": ["{{baseUrlAccounts}}"], "path": ["cuentas"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipo\": \"AHORRO\",\n  \"saldoInicial\": 2000.00,\n  \"estado\": \"ACTIVA\",\n  \"clienteId\": 1\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"]}}]
+        },
+        {
+          "name": "GET /cuentas/{id}",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrlAccounts}}/cuentas/1", "host": ["{{baseUrlAccounts}}"], "path": ["cuentas", "1"]}
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "PUT /cuentas/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlAccounts}}/cuentas/1", "host": ["{{baseUrlAccounts}}"], "path": ["cuentas", "1"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"INACTIVA\"\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "DELETE /cuentas/{id}",
+          "request": {
+            "method": "DELETE",
+            "url": {"raw": "{{baseUrlAccounts}}/cuentas/1", "host": ["{{baseUrlAccounts}}"], "path": ["cuentas", "1"]}
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "POST /movimientos",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlAccounts}}/movimientos", "host": ["{{baseUrlAccounts}}"], "path": ["movimientos"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cuentaId\": 1,\n  \"valor\": -575.00\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"]}}]
+        },
+        {
+          "name": "GET /movimientos/{id}",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrlAccounts}}/movimientos/1", "host": ["{{baseUrlAccounts}}"], "path": ["movimientos", "1"]}
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        },
+        {
+          "name": "POST /ajustes",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlAccounts}}/ajustes", "host": ["{{baseUrlAccounts}}"], "path": ["ajustes"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movimientoOrigenId\": 1,\n  \"valor\": 50.00,\n  \"justificacion\": \"Correccion de monto por error de digitacion\"\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"]}}]
+        },
+        {
+          "name": "POST /reversiones",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrlAccounts}}/reversiones", "host": ["{{baseUrlAccounts}}"], "path": ["reversiones"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movimientoOrigenId\": 1\n}"
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"]}}]
+        },
+        {
+          "name": "GET /reportes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrlAccounts}}/reportes?clienteId=1&fechaInicio=2026-01-01&fechaFin=2026-12-31",
+              "host": ["{{baseUrlAccounts}}"],
+              "path": ["reportes"],
+              "query": [
+                {"key": "clienteId", "value": "1"},
+                {"key": "fechaInicio", "value": "2026-01-01"},
+                {"key": "fechaFin", "value": "2026-12-31"}
+              ]
+            }
+          },
+          "event": [{"listen": "test", "script": {"exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"]}}]
+        }
+      ]
+    }
+  ]
+}

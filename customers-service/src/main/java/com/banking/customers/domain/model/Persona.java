@@ -10,9 +10,6 @@ public abstract class Persona {
     protected String direccion;
     protected String telefono;
 
-    protected Persona() {
-    }
-
     protected Persona(Long id, String nombre, Genero genero, int edad,
                       String identificacion, String direccion, String telefono) {
         this.id = id;

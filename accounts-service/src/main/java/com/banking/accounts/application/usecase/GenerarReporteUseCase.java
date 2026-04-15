@@ -2,6 +2,7 @@ package com.banking.accounts.application.usecase;
 
 import com.banking.accounts.application.dto.ReporteItemResponse;
 import com.banking.accounts.domain.exception.BusinessRuleException;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.exception.ClienteNotFoundException;
 import com.banking.accounts.domain.model.ClienteProyeccion;
 import com.banking.accounts.domain.model.Cuenta;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service
 public class GenerarReporteUseCase {
 
     private final ClienteProyeccionRepository clienteProyeccionRepository;

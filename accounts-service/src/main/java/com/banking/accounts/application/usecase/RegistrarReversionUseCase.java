@@ -2,6 +2,7 @@ package com.banking.accounts.application.usecase;
 
 import com.banking.accounts.application.dto.CrearReversionRequest;
 import com.banking.accounts.application.dto.MovimientoResponse;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.exception.CuentaNotFoundException;
 import com.banking.accounts.domain.exception.MovimientoNotFoundException;
 import com.banking.accounts.domain.model.Cuenta;
@@ -12,6 +13,7 @@ import com.banking.accounts.domain.port.MovimientoRepository;
 
 import java.math.BigDecimal;
 
+@Service
 public class RegistrarReversionUseCase {
 
     private final MovimientoRepository movimientoRepository;

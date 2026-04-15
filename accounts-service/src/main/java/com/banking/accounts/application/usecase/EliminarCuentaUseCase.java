@@ -2,11 +2,13 @@ package com.banking.accounts.application.usecase;
 
 import com.banking.accounts.application.dto.CuentaResponse;
 import com.banking.accounts.domain.exception.BusinessRuleException;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.exception.CuentaNotFoundException;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.port.CuentaRepository;
 import com.banking.accounts.domain.port.MovimientoRepository;
 
+@Service
 public class EliminarCuentaUseCase {
 
     private final CuentaRepository cuentaRepository;

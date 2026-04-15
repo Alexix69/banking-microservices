@@ -23,7 +23,7 @@ public class ClienteProyeccionJpaEntity {
     @Column(length = 10, nullable = false)
     private EstadoCliente estado;
 
-    protected ClienteProyeccionJpaEntity() {
+    public ClienteProyeccionJpaEntity() {
     }
 
     public Long getClienteId() {

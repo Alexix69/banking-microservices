@@ -3,9 +3,11 @@ package com.banking.accounts.application.usecase;
 import com.banking.accounts.application.dto.ActualizarCuentaRequest;
 import com.banking.accounts.application.dto.CuentaResponse;
 import com.banking.accounts.domain.exception.CuentaNotFoundException;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.port.CuentaRepository;
 
+@Service
 public class ActualizarCuentaUseCase {
 
     private final CuentaRepository cuentaRepository;

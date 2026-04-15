@@ -41,7 +41,7 @@ public class CuentaJpaEntity {
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
-    protected CuentaJpaEntity() {
+    public CuentaJpaEntity() {
     }
 
     public Long getId() {

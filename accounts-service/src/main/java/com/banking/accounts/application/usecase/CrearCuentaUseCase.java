@@ -3,12 +3,14 @@ package com.banking.accounts.application.usecase;
 import com.banking.accounts.application.dto.CrearCuentaRequest;
 import com.banking.accounts.application.dto.CuentaResponse;
 import com.banking.accounts.domain.exception.ClienteInactivoException;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.exception.NumeroCuentaDuplicadoException;
 import com.banking.accounts.domain.model.ClienteProyeccion;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.port.ClienteProyeccionRepository;
 import com.banking.accounts.domain.port.CuentaRepository;
 
+@Service
 public class CrearCuentaUseCase {
 
     private final CuentaRepository cuentaRepository;

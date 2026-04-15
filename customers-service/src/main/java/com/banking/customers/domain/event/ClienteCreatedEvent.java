@@ -2,7 +2,7 @@ package com.banking.customers.domain.event;
 
 import com.banking.customers.domain.model.EstadoCliente;
 
-public class ClienteCreatedEvent implements DomainEvent {
+public final class ClienteCreatedEvent implements DomainEvent {
 
     private final Long clienteId;
     private final String nombre;

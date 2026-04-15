@@ -24,7 +24,7 @@ Exchange: cliente.events  (type: topic, durable: true, auto-delete: false)
       │                                             ▼ consume (manual ack)
       │                                       accounts-service → persiste en cliente_proyeccion
       │
-      └─ routing key: cliente.deleted ──► Queue: accounts.cliente.deleted
+      └─ routing key: cliente.desactivado ──► Queue: accounts.cliente.desactivado
                                               (durable: true, exclusive: false, auto-delete: false)
                                               x-dead-letter-exchange: cliente.events.dlx
                                               x-dead-letter-routing-key: dead
@@ -85,14 +85,14 @@ ON CONFLICT (cliente_id) DO UPDATE
 
 ---
 
-## ClienteDeletedEvent
+## ClienteDesactivadoEvent
 
 Publicado por customers-service inmediatamente después de que la transacción de desactivación lógica del cliente se confirma en `db_customers`.
 
 ### Routing key
 
 ```
-cliente.deleted
+cliente.desactivado
 ```
 
 ### Payload (JSON serializado)
@@ -157,10 +157,10 @@ public class RabbitMQConfig {
     public static final String EXCHANGE_CLIENTE = "cliente.events";
     public static final String EXCHANGE_DLX = "cliente.events.dlx";
     public static final String QUEUE_CLIENTE_CREATED = "accounts.cliente.created";
-    public static final String QUEUE_CLIENTE_DELETED = "accounts.cliente.deleted";
+    public static final String QUEUE_CLIENTE_DESACTIVADO = "accounts.cliente.desactivado";
     public static final String QUEUE_DLQ = "accounts.cliente.dlq";
     public static final String ROUTING_CREATED = "cliente.created";
-    public static final String ROUTING_DELETED = "cliente.deleted";
+    public static final String ROUTING_DESACTIVADO = "cliente.desactivado";
 
     @Bean
     public TopicExchange clienteExchange() {
@@ -181,8 +181,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue clienteDeletedQueue() {
-        return QueueBuilder.durable(QUEUE_CLIENTE_DELETED)
+    public Queue clienteDesactivadoQueue() {
+        return QueueBuilder.durable(QUEUE_CLIENTE_DESACTIVADO)
                 .withArgument("x-dead-letter-exchange", EXCHANGE_DLX)
                 .withArgument("x-dead-letter-routing-key", "dead")
                 .build();
@@ -199,8 +199,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding clienteDeletedBinding(Queue clienteDeletedQueue, TopicExchange clienteExchange) {
-        return BindingBuilder.bind(clienteDeletedQueue).to(clienteExchange).with(ROUTING_DELETED);
+    public Binding clienteDesactivadoBinding(Queue clienteDesactivadoQueue, TopicExchange clienteExchange) {
+        return BindingBuilder.bind(clienteDesactivadoQueue).to(clienteExchange).with(ROUTING_DESACTIVADO);
     }
 
     @Bean

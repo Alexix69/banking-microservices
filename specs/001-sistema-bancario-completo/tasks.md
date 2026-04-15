@@ -44,8 +44,8 @@
 ### FASE 1 — customers-service — Dominio
 
 - [X] T002 Enums y entidades de dominio: `Genero`, `EstadoCliente`, `Persona`, `Cliente`
-- [ ] T003 Jerarquía de excepciones de dominio de `customers-service`
-- [ ] T004 Eventos de dominio y puertos: `ClienteCreatedEvent`, `ClienteDesactivadoEvent`, `ClienteRepository`, `EventPublisher`
+- [X] T003 Jerarquía de excepciones de dominio de `customers-service`
+- [X] T004 Eventos de dominio y puertos: `ClienteCreatedEvent`, `ClienteDesactivadoEvent`, `ClienteRepository`, `EventPublisher`
 
 ### FASE 2 — customers-service — Aplicación
 
@@ -279,10 +279,10 @@ banking-microservices/
 - `customers-service/src/main/java/com/banking/customers/domain/event/DomainEvent.java`
   - interfaz marcador
 - `customers-service/src/main/java/com/banking/customers/domain/event/ClienteCreatedEvent.java`
-  - campos: `clienteId (Long)`, `nombre (String)`, `estado (String)`
-  - constructor con los tres campos; `estado` siempre `"activo"`
+  - campos: `clienteId (Long)`, `nombre (String)`, `estado (EstadoCliente)`
+  - constructor con los tres campos; `estado` siempre `EstadoCliente.ACTIVO`
 - `customers-service/src/main/java/com/banking/customers/domain/event/ClienteDesactivadoEvent.java`
-  - ⚠️ **Decisión B**: Nombre es `ClienteDesactivadoEvent`, **no** `ClienteDeletedEvent`
+  - ⚠️ **Decisión B**: Nombre es `ClienteDesactivadoEvent`
   - campo: `clienteId (Long)`
 - `customers-service/src/main/java/com/banking/customers/domain/port/ClienteRepository.java`
   - `Optional<Cliente> findById(Long id)`
@@ -293,8 +293,10 @@ banking-microservices/
   - `void publish(DomainEvent event)`
 
 **Criterio de completitud**:
-- `ClienteCreationTest` pasa incluyendo el escenario de registro de evento.
-- Las interfaces compilan sin dependencias de Spring ni RabbitMQ.
+- `ClienteCreationTest` pasa incluyendo el escenario de registro de evento. ✅
+- Las interfaces compilan sin dependencias de Spring ni RabbitMQ. ✅
+- `Cliente.desactivar()` registra `ClienteDesactivadoEvent` después de cambiar el estado a `INACTIVO`. ✅
+- Total de tests en verde: 31. ✅
 
 ---
 

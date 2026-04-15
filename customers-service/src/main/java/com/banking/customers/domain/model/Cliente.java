@@ -1,5 +1,6 @@
 package com.banking.customers.domain.model;
 
+import com.banking.customers.domain.event.ClienteDesactivadoEvent;
 import com.banking.customers.domain.event.DomainEvent;
 import com.banking.customers.domain.exception.ContrasenaInvalidaException;
 import com.banking.customers.domain.exception.EdadInvalidaException;
@@ -44,6 +45,7 @@ public class Cliente extends Persona {
 
     public void desactivar() {
         this.estado = EstadoCliente.INACTIVO;
+        registrarEvento(new ClienteDesactivadoEvent(this.id));
     }
 
     public void actualizarDatos(String nombre, Genero genero, int edad,

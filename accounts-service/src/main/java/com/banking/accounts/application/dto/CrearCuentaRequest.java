@@ -3,6 +3,7 @@ package com.banking.accounts.application.dto;
 import com.banking.accounts.domain.model.EstadoCuenta;
 import com.banking.accounts.domain.model.TipoCuenta;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ public class CrearCuentaRequest {
 
     @NotNull
     @DecimalMin("0")
+    @Digits(integer = 13, fraction = 2)
     private final BigDecimal saldoInicial;
 
     @NotNull

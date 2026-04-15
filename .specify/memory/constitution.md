@@ -1,11 +1,10 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.0 → 1.0.1
+Version change: 1.0.1 → 1.0.2
 Bump type: PATCH
 
-Modified principles: sección 4 (regla de idioma de tests),
-                     sección 7 (ejemplos de nombres de test)
+Modified principles: sección 2.3 (nombre de evento de desactivación)
 
 Added sections:
   1. Propósito y alcance
@@ -90,7 +89,7 @@ escenario de producción.
 
 El patrón de coordinación es Choreography con Domain Events:
 customers-service publica eventos de dominio (ClienteCreatedEvent,
-ClienteDeletedEvent); accounts-service los consume y actualiza
+ClienteDesactivadoEvent); accounts-service los consume y actualiza
 su proyección local de forma autónoma.
 
 ### 2.4 Persistencia
@@ -446,4 +445,4 @@ Los datos persisten entre reinicios mediante named volumes.
 *Este documento es la fuente de verdad del proyecto. Toda spec, plan
 y tarea generada por cualquier agente debe ser consistente con él.*
 
-**Version**: 1.0.1 | **Ratified**: 2026-04-14 | **Last Amended**: 2026-04-14
+**Version**: 1.0.2 | **Ratified**: 2026-04-14 | **Last Amended**: 2026-04-14

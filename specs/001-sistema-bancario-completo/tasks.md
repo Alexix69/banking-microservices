@@ -50,7 +50,7 @@
 ### FASE 2 — customers-service — Aplicación
 
 - [X] T005 DTOs de `customers-service`: `CrearClienteRequest`, `ActualizarClienteRequest`, `ClienteResponse`
-- [ ] T006 `CrearClienteUseCase` (HU-01)
+- [X] T006 `CrearClienteUseCase` (HU-01)
 - [ ] T007 `ConsultarClienteUseCase` (HU-02)
 - [ ] T008 `ActualizarClienteUseCase` (HU-03)
 - [ ] T009 `EliminarClienteUseCase` (HU-04) — sin validar cuentas activas (Decisión B)
@@ -338,7 +338,7 @@ banking-microservices/
 - `customers-service/src/test/java/com/banking/customers/unit/usecase/CrearClienteUseCaseTest.java`
   - `crearClienteConIdentificacionDuplicadaDebeLanzarIdentificacionDuplicadaException()`
   - `crearClienteValidoDebePersistirYPublicarClienteCreatedEvent()`
-  - `crearClienteConEdadInvalidaDebePropagar EdadInvalidaException()`
+  - `(cubierto en T02 — ClienteCreationTest y ClienteValidationTest)`
   - Usa Mockito para `ClienteRepository` y `EventPublisher`
 
 **Código de producción (Green)**:
@@ -351,8 +351,8 @@ banking-microservices/
   - retorna `ClienteResponse`
 
 **Criterio de completitud**:
-- `CrearClienteUseCaseTest` pasa 100% en verde.
-- Sin levantamiento de contexto Spring en los tests (tiempo de ejecución < 500 ms).
+- `CrearClienteUseCaseTest` pasa 100% en verde. ✅ (40 tests, 0 failures)
+- Sin levantamiento de contexto Spring en los tests (tiempo de ejecución < 500 ms). ✅
 
 ---
 

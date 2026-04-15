@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-customers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Run customers-service tests
+        run: ./gradlew :customers-service:test --no-daemon
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: customers-test-report
+          path: customers-service/build/reports/tests/
+
+  test-accounts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Run accounts-service tests
+        run: ./gradlew :accounts-service:test --no-daemon
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accounts-test-report
+          path: accounts-service/build/reports/tests/
+
+  build-customers:
+    needs: test-customers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build customers-service Docker image
+        run: docker build -t customers-service ./customers-service
+
+  build-accounts:
+    needs: test-accounts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build accounts-service Docker image
+        run: docker build -t accounts-service ./accounts-service

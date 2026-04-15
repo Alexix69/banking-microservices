@@ -71,11 +71,11 @@
 
 ### FASE 5 — accounts-service — Aplicación
 
-- [ ] T018 DTOs de `accounts-service` (incluye `justificacion` en `CrearAjusteRequest` — Decisión A)
-- [ ] T019 Use cases de gestión de cuentas: `CrearCuentaUseCase`, `ConsultarCuentaUseCase`, `ActualizarCuentaUseCase`, `EliminarCuentaUseCase` (HU-05 a HU-08)
-- [ ] T020 Use cases de movimientos: `RegistrarMovimientoUseCase`, `ConsultarMovimientoUseCase` (HU-09, HU-09.1, HU-10)
-- [ ] T021 Use cases de ajuste y reversión: `RegistrarAjusteUseCase` (Decisión A), `RegistrarReversionUseCase` (HU-11.R, HU-12.R)
-- [ ] T022 `GenerarReporteUseCase` (HU-13)
+- [X] T018 DTOs de `accounts-service` (incluye `justificacion` en `CrearAjusteRequest` — Decisión A)
+- [X] T019 Use cases de gestión de cuentas: `CrearCuentaUseCase`, `ConsultarCuentaUseCase`, `ActualizarCuentaUseCase`, `EliminarCuentaUseCase` (HU-05 a HU-08)
+- [X] T020 Use cases de movimientos: `RegistrarMovimientoUseCase`, `ConsultarMovimientoUseCase` (HU-09, HU-09.1, HU-10)
+- [X] T021 Use cases de ajuste y reversión: `RegistrarAjusteUseCase` (Decisión A), `RegistrarReversionUseCase` (HU-11.R, HU-12.R)
+- [X] T022 `GenerarReporteUseCase` (HU-13)
 
 ### FASE 6 — accounts-service — Infraestructura
 

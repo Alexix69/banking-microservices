@@ -16,5 +16,7 @@ public interface CuentaRepository {
 
     List<Cuenta> findByClienteIdAndEstado(Long clienteId, EstadoCuenta estado);
 
+    List<Cuenta> findAllByClienteId(Long clienteId);
+
     void desactivarTodasPorClienteId(Long clienteId);
 }

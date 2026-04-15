@@ -32,4 +32,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    environment("API_VERSION", "1.44")
+    environment("DOCKER_API_VERSION", "1.44")
+    jvmArgs("-Dapi.version=1.44")
 }

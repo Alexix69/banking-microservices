@@ -43,7 +43,7 @@ public class MovimientoJpaEntity {
     @Column(length = 500, nullable = true)
     private String justificacion;
 
-    protected MovimientoJpaEntity() {
+    public MovimientoJpaEntity() {
     }
 
     public Long getId() {

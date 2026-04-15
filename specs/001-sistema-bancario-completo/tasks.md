@@ -79,10 +79,10 @@
 
 ### FASE 6 — accounts-service — Infraestructura
 
-- [ ] T023 Persistencia JPA `accounts-service` + `BaseDatos.sql` con columna `justificacion` (Decisión A)
-- [ ] T024 Consumer RabbitMQ `accounts-service` + `RabbitMQConfig` con lógica Decisión B/C Flujo 2
-- [ ] T025 Controllers REST `accounts-service` + `GlobalExceptionHandler`
-- [ ] T026 `Dockerfile` y `application.yml` productivo de `accounts-service`
+- [X] T023 Persistencia JPA `accounts-service` + `BaseDatos.sql` con columna `justificacion` (Decisión A)
+- [X] T024 Consumer RabbitMQ `accounts-service` + `RabbitMQConfig` con lógica Decisión B/C Flujo 2
+- [X] T025 Controllers REST `accounts-service` + `GlobalExceptionHandler`
+- [X] T026 `Dockerfile` y `application.yml` productivo de `accounts-service`
 
 ### FASE 7 — Integración completa y validación final
 

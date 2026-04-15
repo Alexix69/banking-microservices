@@ -2,6 +2,7 @@ package com.banking.accounts.application.usecase;
 
 import com.banking.accounts.application.dto.CrearMovimientoRequest;
 import com.banking.accounts.application.dto.MovimientoResponse;
+import org.springframework.stereotype.Service;
 import com.banking.accounts.domain.exception.CuentaNotFoundException;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.model.Movimiento;
@@ -13,6 +14,7 @@ import com.banking.accounts.domain.validator.MovimientoValidator;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class RegistrarMovimientoUseCase {
 
     private final CuentaRepository cuentaRepository;

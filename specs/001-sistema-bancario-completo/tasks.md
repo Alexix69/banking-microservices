@@ -49,7 +49,7 @@
 
 ### FASE 2 — customers-service — Aplicación
 
-- [ ] T005 DTOs de `customers-service`: `CrearClienteRequest`, `ActualizarClienteRequest`, `ClienteResponse`
+- [X] T005 DTOs de `customers-service`: `CrearClienteRequest`, `ActualizarClienteRequest`, `ClienteResponse`
 - [ ] T006 `CrearClienteUseCase` (HU-01)
 - [ ] T007 `ConsultarClienteUseCase` (HU-02)
 - [ ] T008 `ActualizarClienteUseCase` (HU-03)
@@ -323,8 +323,8 @@ banking-microservices/
   - `contrasena` **NO** se incluye en la respuesta
 
 **Criterio de completitud**:
-- `./gradlew :customers-service:compileJava --no-daemon` sin errores.
-- `contrasena` ausente del `ClienteResponse`.
+- `./gradlew :customers-service:compileJava --no-daemon` sin errores. ✅
+- `contrasena` ausente del `ClienteResponse`. ✅
 
 ---
 

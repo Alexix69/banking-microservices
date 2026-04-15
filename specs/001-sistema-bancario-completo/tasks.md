@@ -51,7 +51,7 @@
 
 - [X] T005 DTOs de `customers-service`: `CrearClienteRequest`, `ActualizarClienteRequest`, `ClienteResponse`
 - [X] T006 `CrearClienteUseCase` (HU-01)
-- [ ] T007 `ConsultarClienteUseCase` (HU-02)
+- [X] T007 `ConsultarClienteUseCase` (HU-02)
 - [ ] T008 `ActualizarClienteUseCase` (HU-03)
 - [ ] T009 `EliminarClienteUseCase` (HU-04) — sin validar cuentas activas (Decisión B)
 
@@ -374,7 +374,7 @@ banking-microservices/
   - retorna `ClienteResponse`
 
 **Criterio de completitud**:
-- `ConsultarClienteUseCaseTest` pasa 100% en verde sin contexto Spring.
+- `ConsultarClienteUseCaseTest` pasa 100% en verde sin contexto Spring. ✅ (42 tests, 0 failures)
 
 ---
 

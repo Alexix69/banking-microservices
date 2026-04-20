@@ -4,6 +4,7 @@ import com.banking.accounts.application.dto.CrearReversionRequest;
 import com.banking.accounts.application.dto.MovimientoResponse;
 import com.banking.accounts.application.usecase.RegistrarReversionUseCase;
 import com.banking.accounts.domain.exception.MovimientoNotFoundException;
+import com.banking.accounts.domain.exception.SaldoInsuficienteException;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.model.EstadoCuenta;
 import com.banking.accounts.domain.model.Movimiento;
@@ -103,5 +104,20 @@ class RegistrarReversionUseCaseTest {
 
         assertThrows(MovimientoNotFoundException.class, () ->
                 useCase.ejecutar(new CrearReversionRequest(99L)));
+    }
+
+    @Test
+    void reversionWhenCurrentBalanceLowerThanOriginalShouldThrow() {
+        Movimiento movimientoOrigen = Movimiento.reconstitute(1L, LocalDateTime.now(),
+                TipoMovimiento.DEPOSITO, new BigDecimal("500.00"),
+                new BigDecimal("500.00"), 2L, null, null);
+        Cuenta cuenta = Cuenta.reconstitute(2L, "ACC-001", TipoCuenta.AHORRO,
+                new BigDecimal("500.00"), new BigDecimal("100.00"), EstadoCuenta.ACTIVA, 1L);
+        when(movimientoRepository.findById(1L)).thenReturn(Optional.of(movimientoOrigen));
+        when(cuentaRepository.findById(2L)).thenReturn(Optional.of(cuenta));
+
+        assertThrows(SaldoInsuficienteException.class, () ->
+                useCase.ejecutar(new CrearReversionRequest(1L)));
+        verify(movimientoRepository, never()).save(any());
     }
 }

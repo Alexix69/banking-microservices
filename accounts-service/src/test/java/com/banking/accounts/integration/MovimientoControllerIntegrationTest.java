@@ -208,6 +208,46 @@ class MovimientoControllerIntegrationTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
+    @Test
+    void postAjusteExceedingBalanceShouldReturn422WithExactMessage() {
+        Long cuentaId = setupClienteYCuenta(300L, "MOV-100", 100.0);
+        MovimientoJpaEntity mov = crearMovimiento(cuentaId, TipoMovimiento.DEPOSITO, new BigDecimal("100"));
+
+        Map<String, Object> request = Map.of(
+                "movimientoOrigenId", mov.getId(),
+                "valor", -500.0,
+                "justificacion", "Ajuste excesivo"
+        );
+        ResponseEntity<Map> response = testRestTemplate.postForEntity("/ajustes", request, Map.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(response.getBody().get("message")).isEqualTo("Saldo no disponible");
+
+        CuentaJpaEntity cuentaDB = cuentaRepo.findById(cuentaId).orElseThrow();
+        assertThat(cuentaDB.getSaldoDisponible().compareTo(new BigDecimal("100.0"))).isEqualTo(0);
+    }
+
+    @Test
+    void postReversionWhenBalanceInsufficientShouldReturn422() {
+        Long cuentaId = setupClienteYCuenta(301L, "MOV-101", 50.0);
+        MovimientoJpaEntity mov = new MovimientoJpaEntity();
+        mov.setFecha(LocalDateTime.now());
+        mov.setTipoMovimiento(TipoMovimiento.DEPOSITO);
+        mov.setValor(new BigDecimal("500"));
+        mov.setSaldoResultante(new BigDecimal("500"));
+        mov.setCuentaId(cuentaId);
+        MovimientoJpaEntity savedMov = movimientoRepo.save(mov);
+
+        Map<String, Object> request = Map.of("movimientoOrigenId", savedMov.getId());
+        ResponseEntity<Map> response = testRestTemplate.postForEntity("/reversiones", request, Map.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(response.getBody().get("message")).isEqualTo("Saldo no disponible");
+
+        CuentaJpaEntity cuentaDB = cuentaRepo.findById(cuentaId).orElseThrow();
+        assertThat(cuentaDB.getSaldoDisponible().compareTo(new BigDecimal("50.0"))).isEqualTo(0);
+    }
+
     private MovimientoJpaEntity crearMovimiento(Long cuentaId, TipoMovimiento tipo, BigDecimal valor) {
         MovimientoJpaEntity mov = new MovimientoJpaEntity();
         mov.setFecha(LocalDateTime.now());

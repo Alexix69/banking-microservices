@@ -2,6 +2,7 @@ package com.banking.accounts.domain.model;
 
 import com.banking.accounts.domain.exception.ClienteInactivoException;
 import com.banking.accounts.domain.exception.SaldoInicialInvalidoException;
+import com.banking.accounts.domain.exception.SaldoInsuficienteException;
 import com.banking.accounts.domain.exception.SaldoMinimoInsuficienteException;
 
 import java.math.BigDecimal;
@@ -55,7 +56,11 @@ public class Cuenta {
     }
 
     public void aplicarMovimiento(BigDecimal valor) {
-        this.saldoDisponible = this.saldoDisponible.add(valor);
+        BigDecimal nuevoSaldo = this.saldoDisponible.add(valor);
+        if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
+            throw new SaldoInsuficienteException();
+        }
+        this.saldoDisponible = nuevoSaldo;
     }
 
     public void desactivar() {

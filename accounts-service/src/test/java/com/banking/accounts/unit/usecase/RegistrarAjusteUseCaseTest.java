@@ -5,6 +5,7 @@ import com.banking.accounts.application.dto.MovimientoResponse;
 import com.banking.accounts.application.usecase.RegistrarAjusteUseCase;
 import com.banking.accounts.domain.exception.JustificacionRequeridaException;
 import com.banking.accounts.domain.exception.MovimientoNotFoundException;
+import com.banking.accounts.domain.exception.SaldoInsuficienteException;
 import com.banking.accounts.domain.model.Cuenta;
 import com.banking.accounts.domain.model.EstadoCuenta;
 import com.banking.accounts.domain.model.Movimiento;
@@ -82,5 +83,22 @@ class RegistrarAjusteUseCaseTest {
         CrearAjusteRequest request = new CrearAjusteRequest(99L, new BigDecimal("50.00"), "Justificacion");
 
         assertThrows(MovimientoNotFoundException.class, () -> useCase.ejecutar(request));
+    }
+
+    @Test
+    void ajusteWithNegativeValueExceedingBalanceShouldThrow() {
+        Movimiento origen = Movimiento.reconstitute(1L, LocalDateTime.now(),
+                TipoMovimiento.DEPOSITO, new BigDecimal("100.00"),
+                new BigDecimal("100.00"), 2L, null, null);
+        Cuenta cuenta = Cuenta.reconstitute(2L, "ACC-001", TipoCuenta.AHORRO,
+                new BigDecimal("100.00"), new BigDecimal("100.00"), EstadoCuenta.ACTIVA, 1L);
+        when(movimientoRepository.findById(1L)).thenReturn(Optional.of(origen));
+        when(cuentaRepository.findById(2L)).thenReturn(Optional.of(cuenta));
+
+        CrearAjusteRequest request = new CrearAjusteRequest(1L, new BigDecimal("-500"), "Corrección operativa");
+
+        assertThrows(SaldoInsuficienteException.class, () -> useCase.ejecutar(request));
+        verify(movimientoRepository, never()).save(any());
+        verify(cuentaRepository, never()).save(any());
     }
 }
